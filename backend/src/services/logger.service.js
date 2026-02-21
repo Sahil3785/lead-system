@@ -1,7 +1,3 @@
-/**
- * Structured logger: timestamp, level, and JSON-safe payload.
- * Logs to console; can be extended to ship to external services.
- */
 const LOG_LEVELS = { debug: 0, info: 1, warn: 2, error: 3 };
 
 function log(level, message, meta = {}) {

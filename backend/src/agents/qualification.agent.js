@@ -3,9 +3,6 @@ const db = require('../services/db.service');
 
 const HIGH_PRIORITY_KEYWORDS = ['urgent', 'immediately'];
 
-/**
- * Sets priority from message keywords and updates status to "qualified".
- */
 async function runQualification(leadId) {
   const lead = await db.getLeadById(leadId);
   if (!lead) throw new Error(`Lead not found: ${leadId}`);

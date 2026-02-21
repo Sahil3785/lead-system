@@ -1,9 +1,5 @@
 const logger = require('../services/logger.service');
 
-/**
- * Centralized error middleware.
- * Handles async route errors and sends consistent JSON responses.
- */
 function errorMiddleware(err, req, res, next) {
   logger.error('Request error', {
     path: req.path,
@@ -20,9 +16,6 @@ function errorMiddleware(err, req, res, next) {
   });
 }
 
-/**
- * Wraps async route handlers so thrown errors are passed to error middleware.
- */
 function asyncHandler(fn) {
   return (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);

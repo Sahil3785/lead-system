@@ -1,10 +1,3 @@
-/**
- * Reusable retry utility for async operations.
- * Retries up to maxRetries times with a fixed delay between attempts.
- * @param {Function} fn - Async function to execute (no args)
- * @param {Object} options - { maxRetries: number, delayMs: number }
- * @returns {{ success: boolean, retryCount: number, result?: any, error?: Error }}
- */
 async function withRetry(fn, options = {}) {
   const { maxRetries = 2, delayMs = 1000 } = options;
   let lastError;

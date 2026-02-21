@@ -18,9 +18,6 @@ function getPool() {
   return pool;
 }
 
-/**
- * Insert a new lead. Returns the inserted row (with id, created_at, etc.).
- */
 async function insertLead(row) {
   const client = await getPool().connect();
   try {
@@ -45,9 +42,6 @@ async function insertLead(row) {
   }
 }
 
-/**
- * Update lead by id. Only provided fields are updated.
- */
 async function updateLead(id, updates) {
   const client = await getPool().connect();
   try {
@@ -74,9 +68,6 @@ async function updateLead(id, updates) {
   }
 }
 
-/**
- * Get lead by id.
- */
 async function getLeadById(id) {
   const client = await getPool().connect();
   try {

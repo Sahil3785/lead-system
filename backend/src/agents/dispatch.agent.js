@@ -4,11 +4,6 @@ const { withRetry } = require('../utils/retry.util');
 
 const DISPATCH_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-/**
- * Dispatches lead to external API with retry (max 2 retries, 1s delay).
- * On success: status = "completed", api_response_code stored.
- * On failure after retries: status = "api_failed", retry_count updated.
- */
 async function runDispatch(leadId) {
   const lead = await db.getLeadById(leadId);
   if (!lead) throw new Error(`Lead not found: ${leadId}`);

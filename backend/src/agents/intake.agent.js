@@ -5,11 +5,6 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ALLOWED_SOURCES = ['facebook', 'google', 'website'];
 const MIN_MESSAGE_LENGTH = 15;
 
-/**
- * Validates lead payload and persists to DB.
- * If validation fails: insert with status "validation_failed" and return { valid: false, lead, errors }.
- * If valid: insert with status "received" and return { valid: true, lead }.
- */
 async function runIntake(payload) {
   const { name, email, message, source } = payload;
   const errors = [];

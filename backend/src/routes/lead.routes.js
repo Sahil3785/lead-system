@@ -7,10 +7,6 @@ const { runDispatch } = require('../agents/dispatch.agent');
 
 const router = express.Router();
 
-/**
- * Validates that body has exactly: name, email, message, source (all strings).
- * Rejects extra fields or wrong types so we accept ONLY the required format.
- */
 function validateLeadBody(body) {
   if (!body || typeof body !== 'object') return { valid: false, error: 'Body must be a JSON object' };
   const { name, email, message, source } = body;
@@ -26,11 +22,6 @@ function validateLeadBody(body) {
   return { valid: true, payload: { name, email, message, source } };
 }
 
-/**
- * POST /api/lead
- * Accepts only: { name, email, message, source }.
- * Pipeline: Intake -> (if valid) Qualification -> Dispatch.
- */
 router.post(
   '/lead',
   asyncHandler(async (req, res) => {
@@ -44,7 +35,6 @@ router.post(
 
     const { payload } = bodyCheck;
 
-    // Agent 1: Intake — validate and persist
     const intakeResult = await runIntake(payload);
     if (!intakeResult.valid) {
       logger.info('Final status: validation_failed', { leadId: intakeResult.lead.id });
@@ -57,11 +47,9 @@ router.post(
 
     const leadId = intakeResult.lead.id;
 
-    // Agent 2: Qualification — set priority and status = qualified
     await runQualification(leadId);
     logger.info('Agent transition: received -> qualified', { leadId });
 
-    // Agent 3: Dispatch — POST to external API with retry
     try {
       await runDispatch(leadId);
       logger.info('Final status: completed', { leadId });
